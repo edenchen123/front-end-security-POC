@@ -2,10 +2,10 @@ var User
     , _ =               require('underscore')
     , passport =        require('passport')
     , LocalStrategy =   require('passport-local').Strategy
-    , TwitterStrategy = require('passport-twitter').Strategy
-    , FacebookStrategy = require('passport-facebook').Strategy
-    , GoogleStrategy = require('passport-google').Strategy
-    , LinkedInStrategy = require('passport-linkedin').Strategy
+//    , TwitterStrategy = require('passport-twitter').Strategy
+//    , FacebookStrategy = require('passport-facebook').Strategy
+//    , GoogleStrategy = require('passport-google').Strategy
+//    , LinkedInStrategy = require('passport-linkedin').Strategy
     , check =           require('validator').check
     , userRoles =       require('../../client/js/routingConfig').userRoles;
 
@@ -105,63 +105,63 @@ module.exports = {
         }
     ),
 
-    twitterStrategy: function() {
-        if(!process.env.TWITTER_CONSUMER_KEY)    throw new Error('A Twitter Consumer Key is required if you want to enable login via Twitter.');
-        if(!process.env.TWITTER_CONSUMER_SECRET) throw new Error('A Twitter Consumer Secret is required if you want to enable login via Twitter.');
-
-        return new TwitterStrategy({
-            consumerKey: process.env.TWITTER_CONSUMER_KEY,
-            consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-            callbackURL: process.env.TWITTER_CALLBACK_URL || 'http://localhost:8000/auth/twitter/callback'
-        },
-        function(token, tokenSecret, profile, done) {
-            var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
-            done(null, user);
-        });
-    },
-
-    facebookStrategy: function() {
-        if(!process.env.FACEBOOK_APP_ID)     throw new Error('A Facebook App ID is required if you want to enable login via Facebook.');
-        if(!process.env.FACEBOOK_APP_SECRET) throw new Error('A Facebook App Secret is required if you want to enable login via Facebook.');
-
-        return new FacebookStrategy({
-            clientID: process.env.FACEBOOK_APP_ID,
-            clientSecret: process.env.FACEBOOK_APP_SECRET,
-            callbackURL: process.env.FACEBOOK_CALLBACK_URL || "http://localhost:8000/auth/facebook/callback"
-        },
-        function(accessToken, refreshToken, profile, done) {
-            var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
-            done(null, user);
-        });
-    },
-
-    googleStrategy: function() {
-
-        return new GoogleStrategy({
-            returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:8000/auth/google/return",
-            realm: process.env.GOOGLE_REALM || "http://localhost:8000/"
-        },
-        function(identifier, profile, done) {
-            var user = module.exports.findOrCreateOauthUser('google', identifier);
-            done(null, user);
-        });
-    },
-
-    linkedInStrategy: function() {
-        if(!process.env.LINKED_IN_KEY)     throw new Error('A LinkedIn App Key is required if you want to enable login via LinkedIn.');
-        if(!process.env.LINKED_IN_SECRET) throw new Error('A LinkedIn App Secret is required if you want to enable login via LinkedIn.');
-
-        return new LinkedInStrategy({
-            consumerKey: process.env.LINKED_IN_KEY,
-            consumerSecret: process.env.LINKED_IN_SECRET,
-            callbackURL: process.env.LINKED_IN_CALLBACK_URL || "http://localhost:8000/auth/linkedin/callback"
-          },
-           function(token, tokenSecret, profile, done) {
-            var user = module.exports.findOrCreateOauthUser('linkedin', profile.id);
-            done(null,user); 
-          }
-        );
-    },
+//    twitterStrategy: function() {
+//        if(!process.env.TWITTER_CONSUMER_KEY)    throw new Error('A Twitter Consumer Key is required if you want to enable login via Twitter.');
+//        if(!process.env.TWITTER_CONSUMER_SECRET) throw new Error('A Twitter Consumer Secret is required if you want to enable login via Twitter.');
+//
+//        return new TwitterStrategy({
+//            consumerKey: process.env.TWITTER_CONSUMER_KEY,
+//            consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+//            callbackURL: process.env.TWITTER_CALLBACK_URL || 'http://localhost:8000/auth/twitter/callback'
+//        },
+//        function(token, tokenSecret, profile, done) {
+//            var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
+//            done(null, user);
+//        });
+//    },
+//
+//    facebookStrategy: function() {
+//        if(!process.env.FACEBOOK_APP_ID)     throw new Error('A Facebook App ID is required if you want to enable login via Facebook.');
+//        if(!process.env.FACEBOOK_APP_SECRET) throw new Error('A Facebook App Secret is required if you want to enable login via Facebook.');
+//
+//        return new FacebookStrategy({
+//            clientID: process.env.FACEBOOK_APP_ID,
+//            clientSecret: process.env.FACEBOOK_APP_SECRET,
+//            callbackURL: process.env.FACEBOOK_CALLBACK_URL || "http://localhost:8000/auth/facebook/callback"
+//        },
+//        function(accessToken, refreshToken, profile, done) {
+//            var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
+//            done(null, user);
+//        });
+//    },
+//
+//    googleStrategy: function() {
+//
+//        return new GoogleStrategy({
+//            returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:8000/auth/google/return",
+//            realm: process.env.GOOGLE_REALM || "http://localhost:8000/"
+//        },
+//        function(identifier, profile, done) {
+//            var user = module.exports.findOrCreateOauthUser('google', identifier);
+//            done(null, user);
+//        });
+//    },
+//
+//    linkedInStrategy: function() {
+//        if(!process.env.LINKED_IN_KEY)     throw new Error('A LinkedIn App Key is required if you want to enable login via LinkedIn.');
+//        if(!process.env.LINKED_IN_SECRET) throw new Error('A LinkedIn App Secret is required if you want to enable login via LinkedIn.');
+//
+//        return new LinkedInStrategy({
+//            consumerKey: process.env.LINKED_IN_KEY,
+//            consumerSecret: process.env.LINKED_IN_SECRET,
+//            callbackURL: process.env.LINKED_IN_CALLBACK_URL || "http://localhost:8000/auth/linkedin/callback"
+//          },
+//           function(token, tokenSecret, profile, done) {
+//            var user = module.exports.findOrCreateOauthUser('linkedin', profile.id);
+//            done(null,user);
+//          }
+//        );
+//    },
     serializeUser: function(user, done) {
         done(null, user.id);
     },
